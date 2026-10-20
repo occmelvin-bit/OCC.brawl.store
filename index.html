@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCC荒野代打商店</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        /* Custom scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+    <!-- 頂部導覽列 -->
+    <header class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="p-2 bg-indigo-600 rounded-xl shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid fa-gamepad text-xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg tracking-wide text-white">OCC荒野代打商店</h1>
+                    <p class="text-xs text-slate-400">快速 · 高效 · 安全保密</p>
+                </div>
+            </div>
+            
+            <!-- 購物車觸發按鈕 -->
+            <button onclick="toggleCartModal()" class="relative p-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl transition border border-slate-700 flex items-center gap-2">
+                <i class="fa-solid fa-cart-shopping text-indigo-400 text-lg"></i>
+                <span class="hidden sm:inline text-sm font-medium">購物車</span>
+                <span id="cart-badge" class="hidden absolute -top-1.5 -right-1.5 bg-indigo-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-slate-950">0</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-6 flex-grow w-full">
+        
+        <!-- 付款說明提示區塊 -->
+        <div class="mb-8 p-4 rounded-2xl bg-gradient-to-r from-indigo-950/80 to-slate-900 border border-indigo-500/30 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="p-3 bg-blue-500/10 text-blue-400 rounded-xl border border-blue-500/20">
+                    <i class="fa-solid fa-wallet text-2xl"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-slate-200">指定付款方式</h3>
+                    <p class="text-sm text-slate-400">以上所有服務收費<span class="text-amber-400 font-bold">僅接受 AlipayHK (香港支付寶)</span></p>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <a href="https://wa.me/85263682987" target="_blank" class="px-3 py-1.5 bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600/30 rounded-lg text-xs font-medium border border-emerald-500/30 transition flex items-center gap-1.5">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp 查詢
+                </a>
+                <a href="https://instagram.com/occ.melvin" target="_blank" class="px-3 py-1.5 bg-pink-600/20 text-pink-400 hover:bg-pink-600/30 rounded-lg text-xs font-medium border border-pink-500/30 transition flex items-center gap-1.5">
+                    <i class="fa-brands fa-instagram text-sm"></i> IG 查詢
+                </a>
+                <a href="mailto:occ.melvin@gmail.com" class="px-3 py-1.5 bg-slate-800 text-slate-300 hover:bg-slate-700 rounded-lg text-xs font-medium border border-slate-700 transition flex items-center gap-1.5">
+                    <i class="fa-regular fa-envelope text-sm"></i> Email 聯絡
+                </a>
+            </div>
+        </div>
+
+        <!-- 代打服務分類 -->
+        <div class="space-y-8">
+            
+            <!-- 單機生存代打 -->
+            <section>
+                <div class="flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-trophy text-amber-400 text-xl"></i>
+                    <h2 class="text-xl font-bold text-slate-100">單機生存代打</h2>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <!-- 10-1000盃 -->
+                    <div class="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 transition flex flex-col justify-between shadow-lg">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-lg text-slate-200">10 - 1000 盃</h3>
+                                <span class="bg-indigo-500/10 text-indigo-400 font-extrabold text-lg px-3 py-1 rounded-xl border border-indigo-500/20">$40 HKD</span>
+                            </div>
+                            <p class="text-sm text-slate-400 mb-4">適用於初級與中級單機生存模式，快速穩健衝盃。</p>
+                        </div>
+                        <button onclick="addToCart('單機生存代打 (10-1000盃)', 40)" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/20 active:scale-95">
+                            <i class="fa-solid fa-plus text-sm"></i> 加入購物車
+                        </button>
+                    </div>
+
+                    <!-- 1000-2000盃 -->
+                    <div class="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 transition flex flex-col justify-between shadow-lg">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-lg text-slate-200">1000 - 2000 盃</h3>
+                                <span class="bg-indigo-500/10 text-indigo-400 font-extrabold text-lg px-3 py-1 rounded-xl border border-indigo-500/20">$70 HKD</span>
+                            </div>
+                            <p class="text-sm text-slate-400 mb-4">適用於高盃段生存模式，由高技術打手親自操刀。</p>
+                        </div>
+                        <button onclick="addToCart('單機生存代打 (1000-2000盃)', 70)" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/20 active:scale-95">
+                            <i class="fa-solid fa-plus text-sm"></i> 加入購物車
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 排位賽代打 -->
+            <section>
+                <div class="flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-medal text-indigo-400 text-xl"></i>
+                    <h2 class="text-xl font-bold text-slate-100">排位賽代打</h2>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <!-- 黃金 I 至 鑽石 I -->
+                    <div class="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 transition flex flex-col justify-between shadow-lg">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-lg text-slate-200">黃金 I 至 鑽石 I</h3>
+                                <span class="bg-indigo-500/10 text-indigo-400 font-extrabold text-lg px-3 py-1 rounded-xl border border-indigo-500/20">$20 HKD</span>
+                            </div>
+                            <p class="text-sm text-slate-400 mb-4">助您輕鬆跨越黃金分段，迅速提升至鑽石階級。</p>
+                        </div>
+                        <button onclick="addToCart('排位賽代打 (黃金 I 至 鑽石 I)', 20)" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/20 active:scale-95">
+                            <i class="fa-solid fa-plus text-sm"></i> 加入購物車
+                        </button>
+                    </div>
+
+                    <!-- 鑽石 I 至 神話 I -->
+                    <div class="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-2xl p-5 transition flex flex-col justify-between shadow-lg">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-lg text-slate-200">鑽石 I 至 神話 I</h3>
+                                <span class="bg-indigo-500/10 text-indigo-400 font-extrabold text-lg px-3 py-1 rounded-xl border border-indigo-500/20">$40 HKD</span>
+                            </div>
+                            <p class="text-sm text-slate-400 mb-4">頂級代打選手對局，高勝率快速登頂神話殿堂。</p>
+                        </div>
+                        <button onclick="addToCart('排位賽代打 (鑽石 I 至 神話 I)', 40)" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/20 active:scale-95">
+                            <i class="fa-solid fa-plus text-sm"></i> 加入購物車
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- 常見問題與聯絡資訊 -->
+        <section class="mt-12 bg-slate-800/40 border border-slate-800 rounded-2xl p-6">
+            <h3 class="text-lg font-bold mb-4 text-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question text-indigo-400"></i> 常見問題與聯絡資訊
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+                <div class="space-y-3">
+                    <div class="bg-slate-900/40 p-3.5 rounded-xl border border-slate-800">
+                        <p class="font-semibold text-indigo-300 mb-1">如何完成付款？</p>
+                        <p class="text-slate-400">提交訂單後，請透過 AlipayHK (香港支付寶) 轉帳相應金額。我們的客服會盡快聯絡您進行確認並開始代打。</p>
+                    </div>
+                    <div class="bg-slate-900/40 p-3.5 rounded-xl border border-slate-800">
+                        <p class="font-semibold text-indigo-300 mb-1">下單後如何提供帳號資料？</p>
+                        <p class="text-slate-400">提交訂單後不需要在此填寫密碼，我們會主動透過您留下的聯絡方式（WhatsApp / Email / IG）與您確認細節。</p>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-indigo-900/30 to-slate-900 p-5 rounded-xl border border-indigo-500/20 flex flex-col justify-between">
+                    <div>
+                        <h4 class="font-bold text-slate-200 mb-2">如有任何問題，請聯絡我們：</h4>
+                        <ul class="space-y-2.5 text-slate-300">
+                            <li class="flex items-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-emerald-400 text-lg w-5"></i>
+                                <span>WhatsApp: <a href="https://wa.me/85263682987" target="_blank" class="text-emerald-400 underline font-medium">+852 63682987</a></span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-brands fa-instagram text-pink-400 text-lg w-5"></i>
+                                <span>Instagram: <a href="https://instagram.com/occ.melvin" target="_blank" class="text-pink-400 underline font-medium">occ.melvin</a></span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-regular fa-envelope text-indigo-400 text-lg w-5"></i>
+                                <span>Email: <a href="mailto:occ.melvin@gmail.com" class="text-indigo-400 underline font-medium">occ.melvin@gmail.com</a></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-800 text-xs text-slate-400">
+                        營業時間：全天候 24/7 接受下單
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 購物車 Modal -->
+    <div id="cart-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+            
+            <!-- Modal 標題 -->
+            <div class="p-4 bg-slate-800/80 border-b border-slate-700 flex justify-between items-center">
+                <h3 class="font-bold text-lg text-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-cart-shopping text-indigo-400"></i> 您的購物車
+                </h3>
+                <button onclick="toggleCartModal()" class="text-slate-400 hover:text-white p-1 rounded-lg transition">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto flex-grow space-y-6">
+                <!-- 購物車清單 -->
+                <div>
+                    <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">已選服務</h4>
+                    <div id="cart-items" class="space-y-2 max-h-40 overflow-y-auto pr-1">
+                        <!-- JS 動態插入項目 -->
+                    </div>
+                    <div class="flex justify-between items-center mt-3 pt-3 border-t border-slate-800 font-bold">
+                        <span class="text-slate-300">總計金額：</span>
+                        <span id="cart-total" class="text-2xl text-indigo-400">$0 HKD</span>
+                    </div>
+                </div>
+
+                <!-- FormSubmit 表單 -->
+                <form id="order-form" action="https://formsubmit.co/occ.melvin@gmail.com" method="POST" class="space-y-4">
+                    <!-- FormSubmit 設定 -->
+                    <input type="hidden" name="_subject" value="【OCC荒野代打新訂單】通知">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" id="form-cart-details" name="訂單明細" value="">
+                    <input type="hidden" id="form-total-price" name="應付總額" value="">
+
+                    <div class="border-t border-slate-800 pt-4">
+                        <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">請填寫聯絡資料</h4>
+                        <p class="text-xs text-amber-400 mb-3"><i class="fa-solid fa-circle-info mr-1"></i>WhatsApp / Email / IG 三選一填寫即可（亦可填寫多個）</p>
+                        
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">您的姓名 / 稱呼 *</label>
+                                <input type="text" name="客戶姓名" required placeholder="例如：張先生" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                            </div>
+
+                            <div class="space-y-2.5">
+                                <div>
+                                    <label class="block text-xs text-slate-300 mb-1 flex items-center justify-between">
+                                        <span><i class="fa-brands fa-whatsapp text-emerald-400 mr-1"></i> WhatsApp</span>
+                                    </label>
+                                    <input type="text" id="contact-whatsapp" name="聯絡WhatsApp" placeholder="+852 12345678" class="contact-input w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-300 mb-1 flex items-center justify-between">
+                                        <span><i class="fa-regular fa-envelope text-indigo-400 mr-1"></i> Email 信箱</span>
+                                    </label>
+                                    <input type="email" id="contact-email" name="客戶Email" placeholder="your@email.com" class="contact-input w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-slate-300 mb-1 flex items-center justify-between">
+                                        <span><i class="fa-brands fa-instagram text-pink-400 mr-1"></i> Instagram (IG) 帳號</span>
+                                    </label>
+                                    <input type="text" id="contact-ig" name="聯絡IG" placeholder="例如：occ.melvin" class="contact-input w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+                                </div>
+                            </div>
+
+                            <!-- 注意事項說明 -->
+                            <div class="bg-indigo-950/60 border border-indigo-500/30 rounded-xl p-3 text-xs text-indigo-200 leading-relaxed">
+                                <span class="font-bold text-indigo-400 block mb-0.5"><i class="fa-solid fa-bell mr-1"></i> 注意事項：</span>
+                                下單後我們會透過您上述填寫的聯絡方式聯絡您，並協助您完成帳號資料交接與付款作業。
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 text-xs text-amber-300">
+                        <i class="fa-solid fa-triangle-exclamation mr-1"></i> 付款提醒：本商店**僅接受 AlipayHK**。
+                    </div>
+
+                    <button type="submit" id="submit-btn" disabled class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 disabled:bg-slate-700 disabled:text-slate-500 text-white font-bold rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> 傳送訂單給賣家
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 提示 Message Box -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-indigo-600 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 transition-all duration-300 transform translate-y-20 opacity-0 pointer-events-none z-50">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toast-msg">已加入購物車</span>
+    </div>
+
+    <!-- 頁腳 -->
+    <footer class="border-t border-slate-800 bg-slate-900/50 py-4 mt-8">
+        <div class="max-w-4xl mx-auto px-4 text-center text-xs text-slate-500">
+            © 2026 OCC荒野代打商店. All rights reserved. 僅接受 AlipayHK 付款.
+        </div>
+    </footer>
+
+    <!-- JavaScript 邏輯處理 -->
+    <script>
+        let cart = [];
+
+        // 切換購物車 Modal 顯示狀態
+        function toggleCartModal() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        // 加入購物車
+        function addToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+            updateCartUI();
+            showNotification(`已新增 "${name}" 至購物車`);
+        }
+
+        // 移除或減少購物車項目
+        function removeFromCart(name) {
+            const index = cart.findIndex(item => item.name === name);
+            if (index !== -1) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        // 更改數量
+        function changeQuantity(name, delta) {
+            const item = cart.find(item => item.name === name);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    removeFromCart(name);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        // 更新購物車 UI 介面
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+            const cartBadge = document.getElementById('cart-badge');
+            const submitBtn = document.getElementById('submit-btn');
+
+            const formCartDetails = document.getElementById('form-cart-details');
+            const formTotalPrice = document.getElementById('form-total-price');
+
+            // 計算總數量與總價
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            // 更新 Badge
+            if (totalCount > 0) {
+                cartBadge.innerText = totalCount;
+                cartBadge.classList.remove('hidden');
+                submitBtn.disabled = false;
+            } else {
+                cartBadge.classList.add('hidden');
+                submitBtn.disabled = true;
+            }
+
+            // 更新清單 HTML
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `<p class="text-slate-500 text-sm py-4 text-center">購物車是空的</p>`;
+            } else {
+                cartItemsContainer.innerHTML = cart.map(item => `
+                    <div class="flex justify-between items-center bg-slate-800/50 p-2.5 rounded-xl border border-slate-700/50">
+                        <div class="flex-grow pr-2">
+                            <p class="text-sm font-semibold text-slate-200">${item.name}</p>
+                            <p class="text-xs text-indigo-400">$${item.price} HKD / 項</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="changeQuantity('${item.name}', -1)" class="w-6 h-6 bg-slate-700 hover:bg-slate-600 rounded text-slate-200 flex items-center justify-center font-bold text-xs">-</button>
+                            <span class="text-sm font-medium text-slate-200 w-4 text-center">${item.quantity}</span>
+                            <button type="button" onclick="changeQuantity('${item.name}', 1)" class="w-6 h-6 bg-slate-700 hover:bg-slate-600 rounded text-slate-200 flex items-center justify-center font-bold text-xs">+</button>
+                            <button type="button" onclick="removeFromCart('${item.name}')" class="text-red-400 hover:text-red-300 ml-2 p-1">
+                                <i class="fa-solid fa-trash-can text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // 更新總金額顯示
+            cartTotalElement.innerText = `$${totalPrice} HKD`;
+
+            // 整理隱藏表單內容 (發送到 FormSubmit)
+            const cartSummaryText = cart.map(i => `${i.name} x ${i.quantity} ($${i.price * i.quantity} HKD)`).join('; ');
+            formCartDetails.value = cartSummaryText || '無選擇服務';
+            formTotalPrice.value = `$${totalPrice} HKD`;
+        }
+
+        // 顯示 Notify 訊息
+        function showNotification(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            toastMsg.innerText = msg;
+
+            toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+
+        // 表單提交前驗證 (包含三選一聯絡方式檢查)
+        document.getElementById('order-form').addEventListener('submit', function(e) {
+            if (cart.length === 0) {
+                e.preventDefault();
+                showNotification('您的購物車是空的，請先選擇服務！');
+                return;
+            }
+
+            const whatsapp = document.getElementById('contact-whatsapp').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+            const ig = document.getElementById('contact-ig').value.trim();
+
+            if (!whatsapp && !email && !ig) {
+                e.preventDefault();
+                showNotification('請至少填寫 WhatsApp、Email 或 IG 其中一種聯絡方式！');
+            }
+        });
+    </script>
+</body>
+</html>
